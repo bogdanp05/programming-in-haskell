@@ -1,9 +1,8 @@
---import Data.Char
+import Data.Char
 --import Data.List
 import System.IO
 
 -- Hangman, chapter 10.6
-
 hangman :: IO ()
 hangman = do putStrLn "Think of a word:"
              word <- sgetLine
@@ -38,3 +37,25 @@ play word = do putStr "? "
 match :: String -> String -> String
 match xs ys = [if elem x ys then x else '-' | x <- xs]
      
+
+-- Exercise 4
+readInt :: IO Int
+readInt = do
+            x <- getLine
+            return (read x :: Int)
+
+readInts :: Int -> IO [Int]
+readInts 0 = return []
+readInts n = do 
+                x <- readInt
+                xs <- readInts (n-1)
+                return (x:xs) 
+
+adder :: IO ()
+adder = do 
+    putStr "How many numbers? "
+    n <- readInt
+    xs <- readInts n
+    putStrLn (show (sum xs))
+    return ()
+  
